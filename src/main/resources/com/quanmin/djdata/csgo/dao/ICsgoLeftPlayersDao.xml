@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.csgo.dao.ICsgoLeftPlayersDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.csgo.CsgoPlayersVO">
+        select <include refid="base_sql"/>
+        from finish_match_csgo_left_players w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.finish_match_csgo_id != null">
+            and w.finish_match_csgo_id=#{vo.finish_match_csgo_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 根据ID和名称查询游戏是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.csgo.CsgoPlayersVO">
+        select <include refid="base_sql"/>
+        from finish_match_csgo_left_players w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.finish_match_csgo_id != null">
+            and w.finish_match_csgo_id=#{vo.finish_match_csgo_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.csgo.CsgoPlayersVO">
+        insert into finish_match_csgo_left_players (
+            id,
+            finish_match_csgo_id,
+            name,
+            kills,
+            hs,
+            assists,
+            deaths,
+            kdratio,
+            kddiff,
+            adr,
+            fkdiff,
+            rating
+        ) values (
+            #{vo.id,jdbcType=BIGINT},
+            #{vo.finish_match_csgo_id,jdbcType=BIGINT},
+            #{vo.name,jdbcType=VARCHAR},
+            #{vo.kills,jdbcType=VARCHAR},
+            #{vo.hs,jdbcType=VARCHAR},
+            #{vo.assists,jdbcType=VARCHAR},
+            #{vo.deaths,jdbcType=VARCHAR},
+            #{vo.kdratio,jdbcType=VARCHAR},
+            #{vo.kddiff,jdbcType=VARCHAR},
+            #{vo.adr,jdbcType=VARCHAR},
+            #{vo.fkdiff,jdbcType=VARCHAR},
+            #{vo.rating,jdbcType=VARCHAR}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.finish_match_csgo_id,
+        w.name,
+        w.kills,
+        w.hs,
+        w.assists,
+        w.deaths,
+        w.kdratio,
+        w.kddiff,
+        w.adr,
+        w.fkdiff,
+        w.rating
+    </sql>
+
+</mapper>

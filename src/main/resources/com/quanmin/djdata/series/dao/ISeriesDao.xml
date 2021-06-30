@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.series.dao.ISeriesDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.series.SeriesVO">
+        select <include refid="base_sql"/>
+        from series w
+        where 1=1
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 根据ID和名称查询游戏是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.series.SeriesVO">
+        select <include refid="base_sql"/>
+        from series w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.area_id != null">
+            and w.area_id=#{vo.area_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.course_id != null">
+            and w.course_id=#{vo.course_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 是否存在 -->
+    <select id="isExist" resultType="com.quanmin.djdata.pojo.series.SeriesVO">
+        select <include refid="base_sql"/>
+        from series w
+        where w.id=#{vo.id,jdbcType=BIGINT}
+        and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 分页lol-英雄联盟 -->
+    <select id="pageLol" resultType="com.quanmin.djdata.pojo.series.SeriesVO">
+        select <include refid="base_sql"/>
+        from series w
+        where 1=1
+        <if test="vo.begin_time != null">
+            and w.start_time &gt;= #{vo.begin_time,jdbcType=BIGINT}
+        </if>
+        <if test="vo.end_time != null">
+            and w.start_time &lt; #{vo.end_time,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.status != null">
+            and w.status=#{vo.status,jdbcType=INTEGER}
+        </if>
+        order by w.start_time desc
+    </select>
+    <!-- aov-王者荣耀 -->
+    <select id="pageAov" resultType="com.quanmin.djdata.pojo.series.SeriesVO">
+        select <include refid="base_sql"/>
+        from series w
+        where 1=1
+        <if test="vo.begin_time != null">
+            and w.start_time &gt;= #{vo.begin_time,jdbcType=BIGINT}
+        </if>
+        <if test="vo.end_time != null">
+            and w.start_time &lt; #{vo.end_time,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.status != null">
+            and w.status=#{vo.status,jdbcType=INTEGER}
+        </if>
+        order by w.start_time desc
+    </select>
+    <!-- dota2-刀塔 -->
+    <select id="pageDota2" resultType="com.quanmin.djdata.pojo.series.SeriesVO">
+        select <include refid="base_sql"/>
+        from series w
+        where 1=1
+        <if test="vo.begin_time != null">
+            and w.start_time &gt;= #{vo.begin_time,jdbcType=BIGINT}
+        </if>
+        <if test="vo.end_time != null">
+            and w.start_time &lt; #{vo.end_time,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.status != null">
+            and w.status=#{vo.status,jdbcType=INTEGER}
+        </if>
+        order by w.start_time asc
+    </select>
+    <!-- csgo -->
+    <select id="pageCsgo" resultType="com.quanmin.djdata.pojo.series.SeriesVO">
+        select <include refid="base_sql"/>
+        from series w
+        where 1=1
+        <if test="vo.begin_time != null">
+            and w.start_time &gt;= #{vo.begin_time,jdbcType=BIGINT}
+        </if>
+        <if test="vo.end_time != null">
+            and w.start_time &lt; #{vo.end_time,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.status != null">
+            and w.status=#{vo.status,jdbcType=INTEGER}
+        </if>
+        order by w.start_time desc
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.series.SeriesVO">
+        insert into series (
+            id,
+            game_id,
+            league_id,
+            area_id,
+            course_id,
+            course_name,
+            status,
+            season_info,
+            description,
+            game_no,
+            game_time,
+            start_time,
+            end_time
+        ) values (
+            #{vo.id,jdbcType=BIGINT},
+            #{vo.game_id,jdbcType=BIGINT},
+            #{vo.league_id,jdbcType=BIGINT},
+            #{vo.area_id,jdbcType=BIGINT},
+            #{vo.course_id,jdbcType=BIGINT},
+            #{vo.course_name,jdbcType=VARCHAR},
+            #{vo.status,jdbcType=INTEGER},
+            #{vo.season_info,jdbcType=VARCHAR},
+            #{vo.description,jdbcType=VARCHAR},
+            #{vo.game_no,jdbcType=VARCHAR},
+            #{vo.game_time,jdbcType=VARCHAR},
+            #{vo.start_time,jdbcType=BIGINT},
+            #{vo.end_time,jdbcType=BIGINT}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.game_id,
+        w.league_id,
+        w.area_id,
+        w.course_id,
+        w.course_name,
+        w.status,
+        w.season_info,
+        w.description,
+        w.start_time,
+        w.end_time
+    </sql>
+
+</mapper>

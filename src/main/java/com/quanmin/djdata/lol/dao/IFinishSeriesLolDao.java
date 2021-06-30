@@ -1,0 +1,33 @@
+package com.quanmin.djdata.lol.dao;
+
+import com.quanmin.djdata.pojo.finish.FinishSeriesVO;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+/**
+ * @Author: ate
+ * @Description: TODO
+ * @CreateDate: 2019-11-14 21:34
+ * @ClassName: com.quanmin.djdata.lol.dao.IFinishSeriesLolDao
+ */
+@Repository
+public interface IFinishSeriesLolDao {
+
+    /**
+     * @author: ate
+     * @description: 保存赛果系列赛
+     * @date: 2019/11/14 21:35
+     * @param: [finishSeriesVO]
+     * @return: int
+     */
+    int insert(@Param("vo") FinishSeriesVO finishSeriesVO);
+
+    /**
+     * @author: ate
+     * @description: 查询赛果系列赛
+     * @date: 2019/11/14 21:36
+     * @param: [finishSeriesVO]
+     * @return: com.quanmin.djdata.pojo.finish.FinishSeriesVO
+     */
+    FinishSeriesVO get(@Param("vo") FinishSeriesVO finishSeriesVO);
+}

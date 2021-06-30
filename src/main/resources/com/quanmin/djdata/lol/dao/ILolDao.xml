@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.lol.dao.ILolDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.lol.LolVO">
+        select <include refid="base_sql"/>
+        from finish_match_lol w
+        where 1=1
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.match_id  != null">
+            and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 根据战队ID更新 -->
+    <update id="updateByTeamId" parameterType="com.quanmin.djdata.pojo.aov.AovVO">
+        update finish_match_lol w
+        <set>
+            <if test="vo.blue_team_logo != null">
+                w.blue_team_logo = #{vo.blue_team_logo,jdbcType=VARCHAR},
+            </if>
+            <if test="vo.blue_team_name != null">
+                w.blue_team_name = #{vo.blue_team_name,jdbcType=VARCHAR},
+            </if>
+            <if test="vo.red_team_logo != null">
+                w.red_team_logo = #{vo.red_team_logo,jdbcType=VARCHAR},
+            </if>
+            <if test="vo.red_team_name != null">
+                w.red_team_name = #{vo.red_team_name,jdbcType=VARCHAR},
+            </if>
+            w.blue_team_id = #{vo.blue_team_id,jdbcType=VARCHAR}
+        </set>
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.match_id != null">
+            and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </update>
+
+    <!-- 查询游戏列表 -->
+    <select id="listBySeries" resultType="com.quanmin.djdata.pojo.lol.LolVO">
+        select <include refid="base_sql"/>
+        from finish_match_lol w
+        where 1=1
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.match_id  != null">
+            and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo1.begin_time != null">
+            and w.start_time &gt;= #{vo1.begin_time,jdbcType=BIGINT}
+        </if>
+        <if test="vo1.end_time != null">
+            and w.start_time &lt; #{vo1.end_time,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 根据ID和名称查询游戏是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.lol.LolVO">
+        select <include refid="base_sql"/>
+        from finish_match_lol w
+        where 1=1
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.match_id  != null">
+            and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 分页 -->
+    <select id="page" resultType="com.quanmin.djdata.pojo.lol.LolVO">
+        select <include refid="base_sql"/>
+        from finish_match_lol w
+        where 1=1
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.match_id  != null">
+            and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.lol.LolVO">
+        insert into finish_match_lol (
+            id,
+            series_id,
+            match_id,
+            game_id,
+            game_no,
+            course_name,
+            blue_gold_diff,
+            start_time,
+            createdAt,
+            game_time,
+            finished,
+            valid,
+            winner,
+            first_blood,
+            first_tower,
+            five_kills,
+            ten_kills,
+            first_drakes,
+            first_nashors,
+            first_inhibitor,
+            herald,
+            blue_team_name,
+            blue_team_tag,
+            blue_team_logo,
+            blue_team_id,
+            blue_team_score,
+            red_team_name,
+            red_team_tag,
+            red_team_logo,
+            red_team_id,
+            red_team_score
+        ) values (
+            #{vo.id,jdbcType=BIGINT},
+            #{vo.series_id,jdbcType=BIGINT},
+            #{vo.match_id,jdbcType=BIGINT},
+            #{vo.game_id,jdbcType=BIGINT},
+            #{vo.game_no,jdbcType=INTEGER},
+            #{vo.course_name,jdbcType=VARCHAR},
+            #{vo.blue_gold_diff,jdbcType=INTEGER},
+            #{vo.start_time,jdbcType=VARCHAR},
+            #{vo.start_time,jdbcType=VARCHAR},
+            #{vo.game_time,jdbcType=INTEGER},
+            #{vo.finished,jdbcType=BOOLEAN},
+            #{vo.valid,jdbcType=BOOLEAN},
+            #{vo.winner,jdbcType=VARCHAR},
+            #{vo.first_blood,jdbcType=VARCHAR},
+            #{vo.first_tower,jdbcType=VARCHAR},
+            #{vo.five_kills,jdbcType=VARCHAR},
+            #{vo.ten_kills,jdbcType=VARCHAR},
+            #{vo.first_drakes,jdbcType=VARCHAR},
+            #{vo.first_nashors,jdbcType=VARCHAR},
+            #{vo.first_inhibitor,jdbcType=VARCHAR},
+            #{vo.herald,jdbcType=VARCHAR},
+            #{vo.blue_team_name,jdbcType=VARCHAR},
+            #{vo.blue_team_tag,jdbcType=VARCHAR},
+            #{vo.blue_team_logo,jdbcType=VARCHAR},
+            #{vo.blue_team_id,jdbcType=BIGINT},
+            #{vo.blue_team_score,jdbcType=BIGINT},
+            #{vo.red_team_name,jdbcType=VARCHAR},
+            #{vo.red_team_tag,jdbcType=VARCHAR},
+            #{vo.red_team_logo,jdbcType=VARCHAR},
+            #{vo.red_team_id,jdbcType=BIGINT},
+            #{vo.red_team_score,jdbcType=BIGINT}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.series_id,
+        w.match_id,
+        w.game_id,
+        w.game_no,
+        w.course_name,
+        w.blue_gold_diff,
+        w.start_time,
+        w.createdAt,
+        w.game_time,
+        w.finished,
+        w.valid,
+        w.winner,
+        w.first_blood,
+        w.first_tower,
+        w.five_kills,
+        w.ten_kills,
+        w.first_drakes,
+        w.first_nashors,
+        w.first_inhibitor,
+        w.herald,
+        w.blue_team_name,
+        w.blue_team_tag,
+        w.blue_team_logo,
+        w.blue_team_id,
+        w.blue_team_score,
+        w.red_team_name,
+        w.red_team_tag,
+        w.red_team_logo,
+        w.red_team_id,
+        w.red_team_score
+    </sql>
+
+</mapper>

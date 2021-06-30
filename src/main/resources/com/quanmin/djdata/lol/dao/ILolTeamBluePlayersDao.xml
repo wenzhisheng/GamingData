@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.lol.dao.ILolTeamBluePlayersDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.lol.LolTeamPlayersVO">
+        select <include refid="base_sql"/>
+        from finish_match_lol_blue_players w
+        where 1=1
+        <if test="vo.finish_match_lol_team_id != null">
+            and w.finish_match_lol_team_id=#{vo.finish_match_lol_team_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 根据ID和名称查询游戏是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.lol.LolTeamPlayersVO">
+        select <include refid="base_sql"/>
+        from finish_match_lol_blue_players w
+        where w.finish_match_lol_team_id=#{vo.finish_match_lol_team_id,jdbcType=BIGINT}
+        and w.player=#{vo.player,jdbcType=BIGINT}
+        and w.champion=#{vo.champion,jdbcType=BIGINT}
+    </select>
+
+    <!-- 分页 -->
+    <select id="page" resultType="com.quanmin.djdata.pojo.lol.LolTeamPlayersVO">
+        select <include refid="base_sql"/>
+        from finish_match_lol_blue_players w
+        where w.finish_match_lol_team_id=#{vo.finish_match_lol_team_id,jdbcType=BIGINT}
+        and w.player=#{vo.player,jdbcType=BIGINT}
+        and w.champion=#{vo.champion,jdbcType=BIGINT}
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.lol.LolTeamPlayersVO">
+        insert into finish_match_lol_blue_players (
+            finish_match_lol_team_id,
+            kda,
+            cs,
+            level,
+            kills,
+            deaths,
+            assists,
+            gold,
+            damage_taken,
+            damage,
+            heal,
+            hp,
+            role,
+            player,
+            champion,
+            gold_rate,
+            relative_gold_diff,
+            damage_taken_rate,
+            damage_taken_min,
+            damage_taken_death,
+            damage_rate,
+            damage_min,
+            damage_kill,
+            summoner_spells
+        ) values (
+            #{vo.finish_match_lol_team_id,jdbcType=BIGINT},
+            #{vo.kda,jdbcType=VARCHAR},
+            #{vo.cs,jdbcType=INTEGER},
+            #{vo.level,jdbcType=INTEGER},
+            #{vo.kills,jdbcType=INTEGER},
+            #{vo.deaths,jdbcType=INTEGER},
+            #{vo.assists,jdbcType=INTEGER},
+            #{vo.gold,jdbcType=INTEGER},
+            #{vo.damage_taken,jdbcType=INTEGER},
+            #{vo.damage,jdbcType=INTEGER},
+            #{vo.heal,jdbcType=INTEGER},
+            #{vo.hp,jdbcType=INTEGER},
+            #{vo.role,jdbcType=VARCHAR},
+            #{vo.player,jdbcType=BIGINT},
+            #{vo.champion,jdbcType=BIGINT},
+            #{vo.gold_rate,jdbcType=VARCHAR},
+            #{vo.relative_gold_diff,jdbcType=INTEGER},
+            #{vo.damage_taken_rate,jdbcType=VARCHAR},
+            #{vo.damage_taken_min,jdbcType=VARCHAR},
+            #{vo.damage_taken_death,jdbcType=VARCHAR},
+            #{vo.damage_rate,jdbcType=VARCHAR},
+            #{vo.damage_min,jdbcType=VARCHAR},
+            #{vo.damage_kill,jdbcType=VARCHAR},
+            #{vo.summoner_spells,jdbcType=VARCHAR}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.finish_match_lol_team_id,
+        w.kda,
+        w.cs,
+        w.level,
+        w.kills,
+        w.deaths,
+        w.assists,
+        w.gold,
+        w.damage_taken,
+        w.damage,
+        w.heal,
+        w.hp,
+        w.role,
+        w.player,
+        w.champion,
+        w.gold_rate,
+        w.relative_gold_diff,
+        w.damage_taken_rate,
+        w.damage_taken_min,
+        w.damage_taken_death,
+        w.damage_rate,
+        w.damage_min,
+        w.damage_kill,
+        w.summoner_spells
+    </sql>
+
+</mapper>

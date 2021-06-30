@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.dota2.dao.IDota2Dao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.dota2.Dota2VO">
+        select <include refid="base_sql"/>
+        from finish_match_dota2 w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.match_id != null">
+            and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 根据战队ID更新 -->
+    <update id="updateByTeamId" parameterType="com.quanmin.djdata.pojo.aov.AovVO">
+        update finish_match_dota2 w
+        <set>
+            <if test="vo.radiant_team_logo != null">
+                w.radiant_team_logo = #{vo.radiant_team_logo,jdbcType=VARCHAR},
+            </if>
+            <if test="vo.radiant_team_name != null">
+                w.radiant_team_name = #{vo.radiant_team_name,jdbcType=VARCHAR},
+            </if>
+            <if test="vo.dire_team_logo != null">
+                w.dire_team_logo = #{vo.dire_team_logo,jdbcType=VARCHAR},
+            </if>
+            <if test="vo.dire_team_name != null">
+                w.dire_team_name = #{vo.dire_team_name,jdbcType=VARCHAR},
+            </if>
+            w.radiant_team_id = #{vo.radiant_team_id,jdbcType=VARCHAR}
+        </set>
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.match_id != null">
+            and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </update>
+
+    <!-- 系列赛 -->
+    <select id="listBySeries" resultType="com.quanmin.djdata.pojo.dota2.Dota2VO">
+        select <include refid="base_sql"/>
+        from finish_match_dota2 w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.match_id != null">
+            and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo1.begin_time != null">
+            and w.start_time &gt;= #{vo1.begin_time,jdbcType=BIGINT}
+        </if>
+        <if test="vo1.end_time != null">
+            and w.start_time &lt; #{vo1.end_time,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 根据ID和名称查询游戏是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.dota2.Dota2VO">
+        select <include refid="base_sql"/>
+        from finish_match_dota2 w
+        where w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 分页 -->
+    <select id="page" resultType="com.quanmin.djdata.pojo.dota2.Dota2VO">
+        select <include refid="base_sql"/>
+        from finish_match_dota2 w
+        where 1=1
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.match_id != null">
+            and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.dota2.Dota2VO">
+        insert into finish_match_dota2 (
+            series_id,
+            match_id,
+            game_id,
+            course_name,
+            start_time,
+            finished,
+            valid,
+            game_time,
+            game_mode,
+            first_pick,
+            first_blood_time,
+            win_side,
+            first_blood,
+            five_kills,
+            ten_kills,
+            ten_kills_score,
+            first_tower,
+            radiant_gold_lead,
+            radiant_picks,
+            radiant_bans,
+            dire_picks,
+            dire_bans,
+            stream_delay_s,
+            roshan_respawn_timer,
+            radiant_score,
+            radiant_invalid_score,
+            radiant_xp,
+            radiant_gold,
+            radiant_towers,
+            radiant_barracks,
+            radiant_last_hits,
+            radiant_damage,
+            dire_score,
+            dire_invalid_score,
+            dire_xp,
+            dire_gold,
+            dire_towers,
+            dire_barracks,
+            dire_last_hits,
+            dire_damage,
+            radiant_team_name,
+            radiant_team_tag,
+            radiant_team_logo,
+            radiant_team_id,
+            radiant_team_score,
+            dire_team_name,
+            dire_team_tag,
+            dire_team_logo,
+            dire_team_id,
+            dire_team_score
+        ) values (
+            #{vo.series_id,jdbcType=BIGINT},
+            #{vo.match_id,jdbcType=BIGINT},
+            #{vo.game_id,jdbcType=BIGINT},
+            #{vo.course_name,jdbcType=VARCHAR},
+            #{vo.start_time,jdbcType=VARCHAR},
+            #{vo.finished,jdbcType=BOOLEAN},
+            #{vo.valid,jdbcType=BOOLEAN},
+            #{vo.game_time,jdbcType=BIGINT},
+            #{vo.game_mode,jdbcType=BIGINT},
+            #{vo.first_pick,jdbcType=VARCHAR},
+            #{vo.first_blood_time,jdbcType=INTEGER},
+            #{vo.win_side,jdbcType=VARCHAR},
+            #{vo.first_blood,jdbcType=VARCHAR},
+            #{vo.five_kills,jdbcType=VARCHAR},
+            #{vo.ten_kills,jdbcType=VARCHAR},
+            #{vo.ten_kills_score,jdbcType=INTEGER},
+            #{vo.first_tower,jdbcType=VARCHAR},
+            #{vo.radiant_gold_lead,jdbcType=INTEGER},
+            #{vo.radiant_picks,jdbcType=VARCHAR},
+            #{vo.radiant_bans,jdbcType=VARCHAR},
+            #{vo.dire_picks,jdbcType=VARCHAR},
+            #{vo.dire_bans,jdbcType=VARCHAR},
+            #{vo.stream_delay_s,jdbcType=BIGINT},
+            #{vo.roshan_respawn_timer,jdbcType=BIGINT},
+            #{vo.radiant_score,jdbcType=BIGINT},
+            #{vo.radiant_invalid_score,jdbcType=BIGINT},
+            #{vo.radiant_xp,jdbcType=BIGINT},
+            #{vo.radiant_gold,jdbcType=BIGINT},
+            #{vo.radiant_towers,jdbcType=BLOB},
+            #{vo.radiant_barracks,jdbcType=BLOB},
+            #{vo.radiant_last_hits,jdbcType=BIGINT},
+            #{vo.radiant_damage,jdbcType=VARCHAR},
+            #{vo.dire_score,jdbcType=BIGINT},
+            #{vo.dire_invalid_score,jdbcType=BIGINT},
+            #{vo.dire_xp,jdbcType=BIGINT},
+            #{vo.dire_gold,jdbcType=BIGINT},
+            #{vo.dire_towers,jdbcType=INTEGER},
+            #{vo.dire_barracks,jdbcType=INTEGER},
+            #{vo.dire_last_hits,jdbcType=INTEGER},
+            #{vo.dire_damage,jdbcType=INTEGER},
+            #{vo.radiant_team_name,jdbcType=VARCHAR},
+            #{vo.radiant_team_tag,jdbcType=VARCHAR},
+            #{vo.radiant_team_logo,jdbcType=VARCHAR},
+            #{vo.radiant_team_id,jdbcType=BIGINT},
+            #{vo.radiant_team_score,jdbcType=BIGINT},
+            #{vo.dire_team_name,jdbcType=VARCHAR},
+            #{vo.dire_team_tag,jdbcType=VARCHAR},
+            #{vo.dire_team_logo,jdbcType=VARCHAR},
+            #{vo.dire_team_id,jdbcType=BIGINT},
+            #{vo.dire_team_score,jdbcType=BIGINT}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.series_id,
+        w.match_id,
+        w.game_id,
+        w.course_name,
+        w.start_time,
+        w.finished,
+        w.valid,
+        w.game_time,
+        w.game_mode,
+        w.first_pick,
+        w.first_blood_time,
+        w.win_side,
+        w.first_blood,
+        w.five_kills,
+        w.ten_kills,
+        w.ten_kills_score,
+        w.first_tower,
+        w.radiant_gold_lead,
+        w.radiant_picks,
+        w.radiant_bans,
+        w.dire_picks,
+        w.dire_bans,
+        w.stream_delay_s,
+        w.roshan_respawn_timer,
+        w.radiant_score,
+        w.radiant_invalid_score,
+        w.radiant_xp,
+        w.radiant_gold,
+        w.radiant_towers,
+        w.radiant_barracks,
+        w.radiant_last_hits,
+        w.radiant_damage,
+        w.dire_score,
+        w.dire_invalid_score,
+        w.dire_xp,
+        w.dire_gold,
+        w.dire_towers,
+        w.dire_barracks,
+        w.dire_last_hits,
+        w.dire_damage,
+        w.radiant_team_name,
+        w.radiant_team_tag,
+        w.radiant_team_logo,
+        w.radiant_team_id,
+        w.radiant_team_score,
+        w.dire_team_name,
+        w.dire_team_tag,
+        w.dire_team_logo,
+        w.dire_team_id,
+        w.dire_team_score
+    </sql>
+
+</mapper>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.csgo.dao.ICsgoDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.csgo.CsgoVO">
+        select <include refid="base_sql"/>
+        from finish_match_csgo w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.match_id != null">
+            and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 根据战队ID更新 -->
+    <update id="updateByTeamId" parameterType="com.quanmin.djdata.pojo.aov.AovVO">
+        update finish_match_csgo w
+        <set>
+            <if test="vo.left_team_logo != null">
+                w.left_team_logo = #{vo.left_team_logo,jdbcType=VARCHAR},
+            </if>
+            <if test="vo.left_team_name != null">
+                w.left_team_name = #{vo.left_team_name,jdbcType=VARCHAR},
+            </if>
+            <if test="vo.right_team_logo != null">
+                w.right_team_logo = #{vo.right_team_logo,jdbcType=VARCHAR},
+            </if>
+            <if test="vo.right_team_name != null">
+                w.right_team_name = #{vo.right_team_name,jdbcType=VARCHAR},
+            </if>
+            w.left_team_id = #{vo.left_team_id,jdbcType=VARCHAR}
+        </set>
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.match_id != null">
+            and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </update>
+
+    <!-- 查询游戏列表 -->
+    <select id="page" resultType="com.quanmin.djdata.pojo.csgo.CsgoVO">
+        select <include refid="base_sql"/>
+        from finish_match_csgo w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.match_id != null">
+            and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 系列赛 -->
+    <select id="listBySeries" resultType="com.quanmin.djdata.pojo.csgo.CsgoVO">
+        select <include refid="base_sql"/>
+        from finish_match_csgo w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.match_id != null">
+            and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo1.begin_time != null">
+            and w.start_time &gt;= #{vo1.begin_time,jdbcType=BIGINT}
+        </if>
+        <if test="vo1.end_time != null">
+            and w.start_time &lt; #{vo1.end_time,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 根据ID和名称查询游戏是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.csgo.CsgoVO">
+        select <include refid="base_sql"/>
+        from finish_match_csgo w
+        where w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.csgo.CsgoVO">
+        insert into finish_match_csgo (
+            id,
+            series_id,
+            match_id,
+            game_id,
+            course_name,
+            match_index,
+            start_time,
+            finished,
+            map,
+            left_score,
+            right_score,
+            flag_r1,
+            flag_w5,
+            flag_r16,
+            left_round_history,
+            right_round_history,
+            overtime_left_score,
+            overtime_right_score,
+            left_team_name,
+            left_team_tag,
+            left_team_logo,
+            left_team_id,
+            left_team_score,
+            right_team_name,
+            right_team_tag,
+            right_team_logo,
+            right_team_id,
+            right_team_score,
+            first_half_left_score,
+            first_half_left_side,
+            first_half_right_score,
+            first_half_right_side,
+            second_half_left_score,
+            second_half_left_side,
+            second_half_right_score,
+            second_half_right_side
+        ) values (
+            #{vo.id,jdbcType=BIGINT},
+            #{vo.series_id,jdbcType=BIGINT},
+            #{vo.match_id,jdbcType=BIGINT},
+            #{vo.game_id,jdbcType=BIGINT},
+            #{vo.course_name,jdbcType=VARCHAR},
+            #{vo.match_index,jdbcType=INTEGER},
+            #{vo.start_time,jdbcType=VARCHAR},
+            #{vo.finished,jdbcType=BOOLEAN},
+            #{vo.map,jdbcType=VARCHAR},
+            #{vo.left_score,jdbcType=INTEGER},
+            #{vo.right_score,jdbcType=INTEGER},
+            #{vo.flag_r1,jdbcType=VARCHAR},
+            #{vo.flag_w5,jdbcType=VARCHAR},
+            #{vo.flag_r16,jdbcType=VARCHAR},
+            #{vo.left_round_history,jdbcType=VARCHAR},
+            #{vo.right_round_history,jdbcType=VARCHAR},
+            #{vo.overtime_left_score,jdbcType=INTEGER},
+            #{vo.overtime_right_score,jdbcType=INTEGER},
+            #{vo.left_team_name,jdbcType=VARCHAR},
+            #{vo.left_team_tag,jdbcType=VARCHAR},
+            #{vo.left_team_logo,jdbcType=VARCHAR},
+            #{vo.left_team_id,jdbcType=BIGINT},
+            #{vo.left_team_score,jdbcType=BIGINT},
+            #{vo.right_team_name,jdbcType=VARCHAR},
+            #{vo.right_team_tag,jdbcType=VARCHAR},
+            #{vo.right_team_logo,jdbcType=VARCHAR},
+            #{vo.right_team_id,jdbcType=BIGINT},
+            #{vo.right_team_score,jdbcType=BIGINT},
+            #{vo.first_half_left_score,jdbcType=BIGINT},
+            #{vo.first_half_left_side,jdbcType=VARCHAR},
+            #{vo.first_half_right_score,jdbcType=BIGINT},
+            #{vo.first_half_right_side,jdbcType=VARCHAR},
+            #{vo.second_half_left_score,jdbcType=BIGINT},
+            #{vo.second_half_left_side,jdbcType=VARCHAR},
+            #{vo.second_half_right_score,jdbcType=BIGINT},
+            #{vo.second_half_right_side,jdbcType=VARCHAR}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.series_id,
+        w.match_id,
+        w.game_id,
+        w.course_name,
+        w.match_index,
+        w.start_time,
+        w.finished,
+        w.map,
+        w.left_score,
+        w.right_score,
+        w.flag_r1,
+        w.flag_w5,
+        w.flag_r16,
+        w.left_round_history,
+        w.right_round_history,
+        w.overtime_left_score,
+        w.overtime_right_score,
+        w.left_team_name,
+        w.left_team_tag,
+        w.left_team_logo,
+        w.left_team_id,
+        w.left_team_score,
+        w.right_team_name,
+        w.right_team_tag,
+        w.right_team_logo,
+        w.right_team_id,
+        w.right_team_score,
+        w.first_half_left_score,
+        w.first_half_left_side,
+        w.first_half_right_score,
+        w.first_half_right_side,
+        w.second_half_left_score,
+        w.second_half_left_side,
+        w.second_half_right_score,
+        w.second_half_right_side
+    </sql>
+
+</mapper>

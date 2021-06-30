@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.aov.dao.IAovDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.aov.AovVO">
+        select <include refid="base_sql"/>
+        from finish_match_aov w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.match_id != null">
+            and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 查询游戏列表 -->
+    <select id="listBySeries" resultType="com.quanmin.djdata.pojo.aov.AovVO">
+        select <include refid="base_sql"/>
+        from finish_match_aov w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.match_id != null">
+            and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo1.begin_time != null">
+            and w.start_time &gt;= #{vo1.begin_time,jdbcType=BIGINT}
+        </if>
+        <if test="vo1.end_time != null">
+            and w.start_time &lt; #{vo1.end_time,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 批量更新 -->
+    <update id="batchUpdate" parameterType="com.quanmin.djdata.pojo.aov.AovVO">
+        update finish_match_aov
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="team_a_logo = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.team_a_logo != null">
+                        when id=#{i.id} = then #{i.team_a_logo,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="team_a_name = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.team_a_name != null">
+                        when id=#{i.id} = then #{i.team_a_name,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="team_b_logo = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.team_b_logo != null">
+                        when id=#{i.id} = then #{i.team_a_logo,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="team_b_name = case" suffix="end,">
+                <foreach collection="list" item="i" index="index">
+                    <if test="i.team_b_name != null">
+                        when id=#{i.id} = then #{i.team_a_name,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where
+        <foreach collection="list" separator="or" item="i" index="index" >
+            id=#{i.id}
+        </foreach>
+    </update>
+
+    <!-- 根据战队ID更新 -->
+    <update id="updateByTeamId" parameterType="com.quanmin.djdata.pojo.aov.AovVO">
+        update finish_match_aov w
+        <set>
+            <if test="vo.team_a_logo != null">
+                w.team_a_logo = #{vo.team_a_logo,jdbcType=VARCHAR},
+            </if>
+            <if test="vo.team_a_name != null">
+                w.team_a_name = #{vo.team_a_name,jdbcType=VARCHAR},
+            </if>
+            <if test="vo.team_b_logo != null">
+                w.team_b_logo = #{vo.team_b_logo,jdbcType=VARCHAR},
+            </if>
+            <if test="vo.team_b_name != null">
+                w.team_b_name = #{vo.team_b_name,jdbcType=VARCHAR},
+            </if>
+            w.team_a_id = #{vo.team_a_id,jdbcType=VARCHAR}
+        </set>
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.match_id != null">
+            and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </update>
+
+    <!-- 根据ID和名称查询游戏是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.aov.AovVO">
+        select <include refid="base_sql"/>
+        from finish_match_aov w
+        where w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        and w.match_id=#{vo.match_id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 分页 -->
+    <select id="page" resultType="com.quanmin.djdata.pojo.aov.AovVO">
+        select <include refid="base_sql"/>
+        from finish_match_aov w
+        where 1=1
+        <if test="vo.series_id != null">
+            and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.aov.AovVO">
+        insert into finish_match_aov (
+            series_id,
+            match_id,
+            game_id,
+            game_no,
+            first_blood,
+            first_dominator,
+            first_tower,
+            first_tyrant,
+            five_kill,
+            ten_kill,
+            win,
+            team_a_site,
+            team_a_id,
+            team_a_logo,
+            team_a_name,
+            team_b_site,
+            team_b_id,
+            team_b_logo,
+            team_b_name
+        ) values (
+            #{vo.series_id,jdbcType=BIGINT},
+            #{vo.match_id,jdbcType=BIGINT},
+            #{vo.game_id,jdbcType=BIGINT},
+            #{vo.game_no,jdbcType=INTEGER},
+            #{vo.first_blood,jdbcType=INTEGER},
+            #{vo.first_dominator,jdbcType=INTEGER},
+            #{vo.first_tower,jdbcType=INTEGER},
+            #{vo.first_tyrant,jdbcType=INTEGER},
+            #{vo.five_kill,jdbcType=INTEGER},
+            #{vo.ten_kill,jdbcType=INTEGER},
+            #{vo.win,jdbcType=INTEGER},
+            #{vo.team_a_site,jdbcType=BIGINT},
+            #{vo.team_a_id,jdbcType=BIGINT},
+            #{vo.team_a_logo,jdbcType=VARCHAR},
+            #{vo.team_a_name,jdbcType=VARCHAR},
+            #{vo.team_b_site,jdbcType=BIGINT},
+            #{vo.team_b_id,jdbcType=BIGINT},
+            #{vo.team_b_logo,jdbcType=VARCHAR},
+            #{vo.team_b_name,jdbcType=VARCHAR}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.series_id,
+        w.match_id,
+        w.game_id,
+        w.game_no,
+        w.first_blood,
+        w.first_dominator,
+        w.first_tower,
+        w.first_tyrant,
+        w.five_kill,
+        w.ten_kill,
+        w.win,
+        w.team_a_site,
+        w.team_a_id,
+        w.team_a_logo,
+        w.team_a_name,
+        w.team_b_site,
+        w.team_b_id,
+        w.team_b_logo,
+        w.team_b_name
+    </sql>
+
+</mapper>

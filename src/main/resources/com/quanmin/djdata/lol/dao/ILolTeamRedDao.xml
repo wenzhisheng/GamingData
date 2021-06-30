@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.lol.dao.ILolTeamRedDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.lol.LolTeamVO">
+        select <include refid="base_sql"/>
+        from finish_match_lol_red w
+        where 1=1
+        <if test="vo.finish_match_lol_id != null">
+            and w.finish_match_lol_id=#{vo.finish_match_lol_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 根据ID和名称查询游戏是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.lol.LolTeamVO">
+        select <include refid="base_sql"/>
+        from finish_match_lol_red w
+        where w.finish_match_lol_id=#{vo.finish_match_lol_id,jdbcType=BIGINT}
+        and w.team_id=#{vo.team_id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 分页 -->
+    <select id="page" resultType="com.quanmin.djdata.pojo.lol.LolTeamVO">
+        select <include refid="base_sql"/>
+        from finish_match_lol_red w
+        where w.finish_match_lol_id=#{vo.finish_match_lol_id,jdbcType=BIGINT}
+        and w.team_id=#{vo.team_id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.lol.LolTeamVO">
+        insert into finish_match_lol_red (
+            finish_match_lol_id,
+            team_id,
+            kills,
+            deaths,
+            assists,
+            gold,
+            cs,
+            drakes,
+            level,
+            damage_taken,
+            damage,
+            nahsor_barons,
+            inhibitors,
+            towers,
+            picks,
+            bans
+        ) values (
+            #{vo.finish_match_lol_id,jdbcType=BIGINT},
+            #{vo.team_id,jdbcType=BIGINT},
+            #{vo.kills,jdbcType=INTEGER},
+            #{vo.deaths,jdbcType=INTEGER},
+            #{vo.assists,jdbcType=INTEGER},
+            #{vo.gold,jdbcType=INTEGER},
+            #{vo.cs,jdbcType=INTEGER},
+            #{vo.drakes,jdbcType=INTEGER},
+            #{vo.level,jdbcType=INTEGER},
+            #{vo.damage_taken,jdbcType=INTEGER},
+            #{vo.damage,jdbcType=INTEGER},
+            #{vo.nahsor_barons,jdbcType=INTEGER},
+            #{vo.inhibitors,jdbcType=INTEGER},
+            #{vo.towers,jdbcType=INTEGER},
+            #{vo.picks,jdbcType=VARCHAR},
+            #{vo.bans,jdbcType=VARCHAR}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.finish_match_lol_id,
+        w.team_id,
+        w.kills,
+        w.deaths,
+        w.assists,
+        w.gold,
+        w.cs,
+        w.drakes,
+        w.level,
+        w.damage_taken,
+        w.damage,
+        w.nahsor_barons,
+        w.inhibitors,
+        w.towers,
+        w.picks,
+        w.bans
+    </sql>
+
+</mapper>

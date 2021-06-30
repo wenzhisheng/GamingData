@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.dota2.dao.IDota2PlayersDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.dota2.Dota2PlayersVO">
+        select <include refid="base_sql"/>
+        from finish_match_dota2_players w
+        where 1=1
+        <if test="vo.finish_match_dota2_id != null">
+            and w.finish_match_dota2_id=#{vo.finish_match_dota2_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 根据ID和名称查询游戏是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.dota2.Dota2PlayersVO">
+        select <include refid="base_sql"/>
+        from finish_match_dota2_players w
+        where w.finish_match_dota2_id=#{vo.finish_match_dota2_id,jdbcType=BIGINT}
+        and w.account=#{vo.account,jdbcType=BIGINT}
+        and w.team=#{vo.team,jdbcType=BIGINT}
+    </select>
+
+    <!-- 分页 -->
+    <select id="page" resultType="com.quanmin.djdata.pojo.dota2.Dota2PlayersVO">
+        select <include refid="base_sql"/>
+        from finish_match_dota2_players w
+        where 1=1
+        <if test="vo.finish_match_dota2_id != null">
+            and w.finish_match_dota2_id=#{vo.finish_match_dota2_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.account != null">
+            and w.account=#{vo.account,jdbcType=BIGINT}
+        </if>
+        <if test="vo.team != null">
+            and w.team=#{vo.team,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.dota2.Dota2PlayersVO">
+        insert into finish_match_dota2_players (
+            finish_match_dota2_id,
+            account,
+            team,
+            hero,
+            kills,
+            death,
+            assists,
+            last_hits,
+            denies,
+            gold,
+            level,
+            gold_per_min,
+            xp_per_min,
+            ultimate_state,
+            item_0,
+            item_1,
+            item_2,
+            item_3,
+            item_4,
+            item_5,
+            hero_damage,
+            tower_damage,
+            hero_healing,
+            respawn_timer,
+            position_x,
+            position_y,
+            net_worth,
+            ability_upgrades
+        ) values (
+            #{vo.finish_match_dota2_id,jdbcType=BIGINT},
+            #{vo.account,jdbcType=BIGINT},
+            #{vo.team,jdbcType=VARCHAR},
+            #{vo.hero,jdbcType=BIGINT},
+            #{vo.kills,jdbcType=VARCHAR},
+            #{vo.death,jdbcType=INTEGER},
+            #{vo.assists,jdbcType=INTEGER},
+            #{vo.last_hits,jdbcType=INTEGER},
+            #{vo.denies,jdbcType=INTEGER},
+            #{vo.gold,jdbcType=INTEGER},
+            #{vo.level,jdbcType=INTEGER},
+            #{vo.gold_per_min,jdbcType=INTEGER},
+            #{vo.xp_per_min,jdbcType=INTEGER},
+            #{vo.ultimate_state,jdbcType=INTEGER},
+            #{vo.item_0,jdbcType=BIGINT},
+            #{vo.item_1,jdbcType=BIGINT},
+            #{vo.item_2,jdbcType=BIGINT},
+            #{vo.item_3,jdbcType=BIGINT},
+            #{vo.item_4,jdbcType=BIGINT},
+            #{vo.item_5,jdbcType=BIGINT},
+            #{vo.hero_damage,jdbcType=INTEGER},
+            #{vo.tower_damage,jdbcType=INTEGER},
+            #{vo.hero_healing,jdbcType=INTEGER},
+            #{vo.respawn_timer,jdbcType=INTEGER},
+            #{vo.position_x,jdbcType=DECIMAL},
+            #{vo.position_y,jdbcType=DECIMAL},
+            #{vo.net_worth,jdbcType=INTEGER},
+            #{vo.ability_upgrades,jdbcType=VARCHAR}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.finish_match_dota2_id,
+        w.account,
+        w.team,
+        w.hero,
+        w.kills,
+        w.death,
+        w.assists,
+        w.last_hits,
+        w.denies,
+        w.gold,
+        w.level,
+        w.gold_per_min,
+        w.xp_per_min,
+        w.ultimate_state,
+        w.item_0,
+        w.item_1,
+        w.item_2,
+        w.item_3,
+        w.item_4,
+        w.item_5,
+        w.hero_damage,
+        w.tower_damage,
+        w.hero_healing,
+        w.respawn_timer,
+        w.position_x,
+        w.position_y,
+        w.net_worth,
+        w.ability_upgrades
+    </sql>
+
+</mapper>

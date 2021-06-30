@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.csgo.dao.IFinishSeriesCsgoDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.finish.FinishSeriesVO">
+        select <include refid="base_sql"/>
+        from finish_series_csgo w
+    </select>
+
+    <!-- 根据ID和名称查询游戏是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.finish.FinishSeriesVO">
+        select <include refid="base_sql"/>
+        from finish_series_csgo w
+        where w.team_id=#{vo.team_id,jdbcType=BIGINT}
+        and w.score=#{vo.score,jdbcType=INTEGER}
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.finish.FinishSeriesVO">
+        insert into finish_series_csgo (
+            series_id,
+            team_id,
+            score
+        ) values (
+            #{vo.series_id,jdbcType=BIGINT},
+            #{vo.team_id,jdbcType=BIGINT},
+            #{vo.score,jdbcType=INTEGER}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.series_id,
+        w.team_id,
+        w.score
+    </sql>
+
+</mapper>

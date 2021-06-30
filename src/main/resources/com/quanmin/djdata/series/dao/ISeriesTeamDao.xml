@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.series.dao.ISeriesTeamDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.series.SeriesTeamVO">
+        select <include refid="base_sql"/>
+        from series_team w
+        where w.series_id=#{vo.id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 根据ID和名称查询游戏是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.series.SeriesTeamVO">
+        select <include refid="base_sql"/>
+        from series_team w
+        where w.team_id=#{vo.team_id,jdbcType=BIGINT}
+        and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 分页 -->
+    <select id="page" resultType="com.quanmin.djdata.pojo.series.SeriesVO">
+        select <include refid="base_sql"/>
+        from series_team w
+        where w.team_id=#{vo.team_id,jdbcType=BIGINT}
+        and w.series_id=#{vo.series_id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.series.SeriesTeamVO">
+        insert into series_team (
+            series_id,
+            team_id,
+            team_logo,
+            team_name,
+            team_type,
+            team_score,
+            first_blood,
+            first_tower,
+            five_kills,
+            ten_kills,
+            first_drakes,
+            first_nashors,
+            first_inhibitor,
+            herald,
+            first_bloods,
+            first_dominator,
+            first_towers,
+            first_tyrant,
+            five_kill,
+            ten_kill,
+            win
+        ) values (
+            #{vo.series_id,jdbcType=BIGINT},
+            #{vo.team_id,jdbcType=BIGINT},
+            #{vo.team_logo,jdbcType=VARCHAR},
+            #{vo.team_name,jdbcType=VARCHAR},
+            #{vo.team_type,jdbcType=VARCHAR},
+            #{vo.team_score,jdbcType=INTEGER},
+            #{vo.first_blood,jdbcType=VARCHAR},
+            #{vo.first_tower,jdbcType=VARCHAR},
+            #{vo.five_kills,jdbcType=VARCHAR},
+            #{vo.ten_kills,jdbcType=VARCHAR},
+            #{vo.first_drakes,jdbcType=VARCHAR},
+            #{vo.first_nashors,jdbcType=VARCHAR},
+            #{vo.first_inhibitor,jdbcType=VARCHAR},
+            #{vo.herald,jdbcType=VARCHAR},
+            #{vo.first_bloods,jdbcType=INTEGER},
+            #{vo.first_dominator,jdbcType=INTEGER},
+            #{vo.first_towers,jdbcType=INTEGER},
+            #{vo.first_tyrant,jdbcType=INTEGER},
+            #{vo.five_kill,jdbcType=INTEGER},
+            #{vo.ten_kill,jdbcType=INTEGER},
+            #{vo.win,jdbcType=INTEGER}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.series_id,
+        w.team_id,
+        w.team_logo,
+        w.team_name,
+        w.team_type,
+        w.team_score,
+        w.first_blood,
+        w.first_tower,
+        w.five_kills,
+        w.ten_kills,
+        w.first_drakes,
+        w.first_nashors,
+        w.first_inhibitor,
+        w.herald,
+        w.first_bloods,
+        w.first_dominator,
+        w.first_towers,
+        w.first_tyrant,
+        w.five_kill,
+        w.ten_kill,
+        w.win
+    </sql>
+
+</mapper>

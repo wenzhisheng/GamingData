@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.lol.dao.ILolTeamBluePicksDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.lol.LolTeamRoleVO">
+        select <include refid="base_sql"/>
+        from finish_match_lol_blue_picks w
+        where 1=1
+        <if test="vo.finish_match_lol_id != null">
+            and w.finish_match_lol_id=#{vo.finish_match_lol_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 根据ID和名称查询游戏是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.lol.LolTeamRoleVO">
+        select <include refid="base_sql"/>
+        from finish_match_lol_blue_picks w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.finish_match_lol_id != null">
+            and w.finish_match_lol_id=#{vo.finish_match_lol_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.role_id != null">
+            and w.role_id=#{vo.role_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 分页 -->
+    <select id="page" resultType="com.quanmin.djdata.pojo.lol.LolTeamRoleVO">
+        select <include refid="base_sql"/>
+        from finish_match_lol_blue_picks w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.finish_match_lol_id != null">
+            and w.finish_match_lol_id=#{vo.finish_match_lol_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.role_id != null">
+            and w.role_id=#{vo.role_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.lol.LolTeamRoleVO">
+        insert into finish_match_lol_blue_picks (
+            finish_match_lol_id,
+            role_id,
+            role_logo,
+            role_name,
+            role_name_english,
+            role_alias,
+            role_info,
+            role_description
+        ) values (
+            #{vo.finish_match_lol_id,jdbcType=BIGINT},
+            #{vo.role_id,jdbcType=BIGINT},
+            #{vo.role_logo,jdbcType=VARCHAR},
+            #{vo.role_name,jdbcType=VARCHAR},
+            #{vo.role_name_english,jdbcType=VARCHAR},
+            #{vo.role_alias,jdbcType=VARCHAR},
+            #{vo.role_info,jdbcType=VARCHAR},
+            #{vo.role_description,jdbcType=VARCHAR}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.finish_match_lol_id,
+        w.role_id,
+        w.role_logo,
+        w.role_name,
+        w.role_name_english,
+        w.role_alias,
+        w.role_info,
+        w.role_description
+    </sql>
+
+</mapper>

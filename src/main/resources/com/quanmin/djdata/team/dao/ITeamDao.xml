@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.team.dao.ITeamDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.team.TeamVO">
+        select <include refid="base_sql"/>
+        from team w
+    </select>
+
+    <!-- 是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.team.TeamVO">
+        select <include refid="base_sql"/>
+        from team w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="com.quanmin.djdata.pojo.team.TeamVO">
+        update team w
+        <set>
+            <if test="vo.logo != null">
+                w.logo = #{vo.logo,jdbcType=VARCHAR},
+            </if>
+            <if test="vo.name != null">
+                w.name = #{vo.name,jdbcType=VARCHAR},
+            </if>
+            w.game_type = #{vo.game_type,jdbcType=INTEGER}
+        </set>
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.name != null">
+            and w.name=#{vo.name,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </update>
+
+    <!-- 是否存在 -->
+    <select id="page" resultType="com.quanmin.djdata.pojo.team.TeamVO">
+        select <include refid="base_sql"/>
+        from team w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.team.TeamVO">
+        insert into team (
+            id,
+            game_id,
+            game_type,
+            name,
+            short_name,
+            name_english,
+            local,
+            country,
+            area,
+            logo
+        ) values (
+            #{vo.id,jdbcType=BIGINT},
+            #{vo.game_id,jdbcType=BIGINT},
+            #{vo.game_type,jdbcType=INTEGER},
+            #{vo.name,jdbcType=VARCHAR},
+            #{vo.short_name,jdbcType=VARCHAR},
+            #{vo.name_english,jdbcType=VARCHAR},
+            #{vo.local,jdbcType=VARCHAR},
+            #{vo.country,jdbcType=VARCHAR},
+            #{vo.area,jdbcType=VARCHAR},
+            #{vo.logo,jdbcType=VARCHAR}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.game_id,
+        w.game_type,
+        w.name,
+        w.short_name,
+        w.name_english,
+        w.local,
+        w.country,
+        w.area,
+        w.logo
+    </sql>
+
+</mapper>

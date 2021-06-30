@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.team.dao.ITeamDetailPlayersDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.team.TeamDetailPlayersVO">
+        select <include refid="base_sql"/>
+        from team_detail_player w
+    </select>
+
+    <!-- 是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.team.TeamDetailPlayersVO">
+        select <include refid="base_sql"/>
+        from team_detail_player w
+        where w.id=#{vo.id,jdbcType=BIGINT}
+        and w.name=#{vo.name,jdbcType=BIGINT}
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.team.TeamDetailPlayersVO">
+        insert into team_detail_player (
+            id,
+            team_detail_id,
+            alias,
+            name,
+            name_english,
+            country,
+            team_player_position
+        ) values (
+            #{vo.id,jdbcType=BIGINT},
+            #{vo.team_detail_id,jdbcType=BIGINT},
+            #{vo.alias,jdbcType=VARCHAR},
+            #{vo.name,jdbcType=VARCHAR},
+            #{vo.name_english,jdbcType=VARCHAR},
+            #{vo.country,jdbcType=VARCHAR},
+            #{vo.team_player_position,jdbcType=VARCHAR}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.team_detail_id,
+        w.alias,
+        w.name,
+        w.name_english,
+        w.country,
+        w.team_player_position
+    </sql>
+
+</mapper>

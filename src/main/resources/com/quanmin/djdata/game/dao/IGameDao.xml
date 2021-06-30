@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.game.dao.IGameDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.game.GameVO">
+        select <include refid="base_sql"/>
+        from games w
+    </select>
+
+    <!-- 分页 -->
+    <select id="page" resultType="com.quanmin.djdata.pojo.game.GameVO">
+        select <include refid="base_sql"/>
+        from games w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.name != null">
+            and w.name=#{vo.name,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!-- 根据ID和名称查询游戏是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.game.GameVO">
+        select <include refid="base_sql"/>
+        from games w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.name != null">
+            and w.name=#{vo.name,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.game.GameVO">
+        insert into games (
+            id,
+            name,
+            short_name,
+            code
+        ) values (
+            #{vo.id,jdbcType=BIGINT},
+            #{vo.name,jdbcType=VARCHAR},
+            #{vo.short_name,jdbcType=VARCHAR},
+            #{vo.code,jdbcType=VARCHAR}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.name,
+        w.short_name,
+        w.code
+    </sql>
+
+</mapper>

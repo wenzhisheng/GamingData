@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.lol.dao.ILolTeamRedPlayersEquipmentDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.lol.LolTeamPlayersEquipmentVO">
+        select <include refid="base_sql"/>
+        from finish_match_lol_red_players_equipment w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.finish_match_id != null">
+            and w.finish_match_id=#{vo.finish_match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.finish_match_team_id != null">
+            and w.finish_match_team_id=#{vo.finish_match_team_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.finish_match_players_id != null">
+            and w.finish_match_players_id=#{vo.finish_match_players_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.equipment_id != null">
+            and w.equipment_id=#{vo.equipment_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 根据ID和名称查询游戏是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.lol.LolTeamPlayersEquipmentVO">
+        select <include refid="base_sql"/>
+        from finish_match_lol_red_players_equipment w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.finish_match_id != null">
+            and w.finish_match_id=#{vo.finish_match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.finish_match_team_id != null">
+            and w.finish_match_team_id=#{vo.finish_match_team_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.finish_match_players_id != null">
+            and w.finish_match_players_id=#{vo.finish_match_players_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.equipment_id != null">
+            and w.equipment_id=#{vo.equipment_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 分页 -->
+    <select id="page" resultType="com.quanmin.djdata.pojo.lol.LolTeamPlayersEquipmentVO">
+        select <include refid="base_sql"/>
+        from finish_match_lol_red_players_equipment w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.finish_match_id != null">
+            and w.finish_match_id=#{vo.finish_match_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.finish_match_team_id != null">
+            and w.finish_match_team_id=#{vo.finish_match_team_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.finish_match_players_id != null">
+            and w.finish_match_players_id=#{vo.finish_match_players_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.equipment_id != null">
+            and w.equipment_id=#{vo.equipment_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.lol.LolTeamPlayersEquipmentVO">
+        insert into finish_match_lol_red_players_equipment (
+            finish_match_id,
+            finish_match_team_id,
+            finish_match_players_id,
+            equipment_id,
+            equipment_logo,
+            equipment_name,
+            equipment_name_english,
+            equipment_alias,
+            equipment_info,
+            equipment_description
+        ) values (
+            #{vo.finish_match_id,jdbcType=BIGINT},
+            #{vo.finish_match_team_id,jdbcType=BIGINT},
+            #{vo.finish_match_players_id,jdbcType=BIGINT},
+            #{vo.equipment_id,jdbcType=BIGINT},
+            #{vo.equipment_logo,jdbcType=VARCHAR},
+            #{vo.equipment_name,jdbcType=VARCHAR},
+            #{vo.equipment_name_english,jdbcType=VARCHAR},
+            #{vo.equipment_alias,jdbcType=VARCHAR},
+            #{vo.equipment_info,jdbcType=VARCHAR},
+            #{vo.equipment_description,jdbcType=VARCHAR}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.equipment_id,
+        w.equipment_logo,
+        w.equipment_name,
+        w.equipment_name_english,
+        w.equipment_alias,
+        w.equipment_info,
+        w.equipment_description
+    </sql>
+
+</mapper>

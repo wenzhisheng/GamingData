@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.game.dao.IGameEquipmentsDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.game.GameEquipmentVO">
+        select <include refid="base_sql"/>
+        from game_equipment w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 分页 -->
+    <select id="page" resultType="com.quanmin.djdata.pojo.game.GameEquipmentVO">
+        select <include refid="base_sql"/>
+        from game_equipment w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 根据ID和名称查询游戏是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.game.GameEquipmentVO">
+        select <include refid="base_sql"/>
+        from game_equipment w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.game.GameEquipmentVO">
+        insert into game_equipment (
+            id,
+            game_id,
+            name,
+            name_english,
+            alias,
+            info,
+            description,
+            icon
+        ) values (
+            #{vo.id,jdbcType=BIGINT},
+            #{vo.game_id,jdbcType=BIGINT},
+            #{vo.name,jdbcType=VARCHAR},
+            #{vo.name_english,jdbcType=VARCHAR},
+            #{vo.alias,jdbcType=VARCHAR},
+            #{vo.info,jdbcType=VARCHAR},
+            #{vo.description,jdbcType=VARCHAR},
+            #{vo.icon,jdbcType=VARCHAR}
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.game_id,
+        w.name,
+        w.name_english,
+        w.alias,
+        w.info,
+        w.description,
+        w.icon
+    </sql>
+
+</mapper>

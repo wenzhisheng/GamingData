@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quanmin.djdata.course.dao.ICourseDao">
+
+    <!-- 查询游戏列表 -->
+    <select id="list" resultType="com.quanmin.djdata.pojo.course.CourseVO">
+        select <include refid="base_sql"/>
+        from course w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.name != null">
+            and w.name=#{vo.name,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!-- 根据ID和名称查询游戏是否存在 -->
+    <select id="get" resultType="com.quanmin.djdata.pojo.course.CourseVO">
+        select <include refid="base_sql"/>
+        from course w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.name != null">
+            and w.name=#{vo.name,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!-- 分页 -->
+    <select id="page" resultType="com.quanmin.djdata.pojo.course.CourseVO">
+        select <include refid="base_sql"/>
+        from course w
+        where 1=1
+        <if test="vo.id != null">
+            and w.id=#{vo.id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.name != null">
+            and w.name=#{vo.name,jdbcType=VARCHAR}
+        </if>
+        <if test="vo.game_id != null">
+            and w.game_id=#{vo.game_id,jdbcType=BIGINT}
+        </if>
+        <if test="vo.league_id != null">
+            and w.league_id=#{vo.league_id,jdbcType=BIGINT}
+        </if>
+    </select>
+
+    <!-- 保存数据 -->
+    <insert id="insert" parameterType="com.quanmin.djdata.pojo.course.CourseVO">
+        insert into course (
+            id,
+            name,
+            bonus,
+            bonus_type,
+            game_id,
+            league_id,
+            area_id,
+            description,
+            start_time,
+            end_time
+        ) values (
+            #{vo.id,jdbcType=BIGINT},
+            #{vo.name,jdbcType=VARCHAR},
+            #{vo.bonus,jdbcType=BIGINT},
+            #{vo.bonus_type,jdbcType=BIGINT},
+            #{vo.game_id,jdbcType=BIGINT},
+            #{vo.league_id,jdbcType=BIGINT},
+            #{vo.area_id,jdbcType=BIGINT},
+            #{vo.description,jdbcType=VARCHAR},
+            #{vo.start_time,jdbcType=BIGINT},
+            null
+        );
+    </insert>
+
+    <sql id="base_sql">
+        w.id,
+        w.name,
+        w.bonus,
+        w.bonus_type,
+        w.game_id,
+        w.league_id,
+        w.area_id,
+        w.description,
+        w.start_time,
+        w.end_time
+    </sql>
+
+</mapper>
